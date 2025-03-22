@@ -31,13 +31,19 @@ function App() {
                 <section id="examples">
                     <h2>Examples</h2>
                     <menu>
-                        <TabButton onSelect={handleSelect}>Components</TabButton>
-                        <TabButton onSelect={handleSelect}>JSX</TabButton>
-                        <TabButton onSelect={handleSelect}>Props</TabButton>
-                        <TabButton onSelect={handleSelect}>State</TabButton>
+                        {Object.keys(EXAMPLES).map((key) => (
+                            <TabButton
+                                key={key}
+                                isSelected={selectedTopic == key}
+                                onSelect={handleSelect}
+                            >
+                                {key}
+                            </TabButton>
+                        ))}
+
                     </menu>
                     {!selectedTopic && <p>Please select a topic </p>}
-                    { selectedTopic &&
+                    {selectedTopic &&
                         <div id="tab-content">
                             <h3>{EXAMPLES[selectedTopic].title}</h3>
                             <p>{EXAMPLES[selectedTopic].description}</p>
