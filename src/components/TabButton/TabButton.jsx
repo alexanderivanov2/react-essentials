@@ -1,7 +1,7 @@
-function TabButton({children}) {
+function TabButton({children, onSelect}) {
     return (
         <li>
-            <button>
+            <button onClick={() => onSelect(children)}>
                 {children}
             </button>
         </li>
