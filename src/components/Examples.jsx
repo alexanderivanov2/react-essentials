@@ -1,6 +1,8 @@
 import { EXAMPLES } from "../data";
-import TabButton from "./TabButton/TabButton";
 import { useState } from "react";
+import TabButton from "./TabButton/TabButton";
+import Section from "./Section";
+import Tabs from "./TabButton/Tabs";
 
 function Examples() {
     const [selectedTopic, setSelectedTopic] = useState();
@@ -9,34 +11,35 @@ function Examples() {
         setSelectedTopic(selectedButton.toLowerCase());
     }
     return (
-        <section id="examples">
-            <h2>Examples</h2>
-            <menu>
-                {Object.keys(EXAMPLES).map((key) => (
+        <Section id="examples" title="Examples">
+            <Tabs buttons={
+                Object.keys(EXAMPLES).map((key) => (
                     <TabButton
                         key={key}
                         isSelected={selectedTopic == key}
-                        onSelect={handleSelect}
+                        onClick={() => handleSelect(key)}
                     >
                         {key}
                     </TabButton>
-                ))}
+                ))
+            }>
+                {selectedTopic ?
+                    <div id="tab-content">
+                        <h3>{EXAMPLES[selectedTopic].title}</h3>
+                        <p>{EXAMPLES[selectedTopic].description}</p>
+                        <pre>
+                            <code>
+                                {EXAMPLES[selectedTopic].code}
+                            </code>
+                        </pre>
 
-            </menu>
-            {!selectedTopic && <p>Please select a topic </p>}
-            {selectedTopic &&
-                <div id="tab-content">
-                    <h3>{EXAMPLES[selectedTopic].title}</h3>
-                    <p>{EXAMPLES[selectedTopic].description}</p>
-                    <pre>
-                        <code>
-                            {EXAMPLES[selectedTopic].code}
-                        </code>
-                    </pre>
+                    </div>
+                    :
+                    <p>Please select a topic </p>
+                }
+            </Tabs>
 
-                </div>
-            }
-        </section>
+        </Section>
     )
 }
 
